@@ -1,0 +1,22 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int DOOM(int N){
+    int doomcount=1;
+    int num=666;
+    while (doomcount<N){
+        num++;
+        string temp=to_string(num);
+        if(temp.find("666")!=string::npos) doomcount++;
+    }
+    return num;
+}
+
+int main(void){
+    int N;
+    cin>>N;
+    cout<<DOOM(N);
+    return 0;
+}
