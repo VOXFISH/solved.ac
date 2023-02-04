@@ -1,0 +1,129 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class num{
+    private:
+    short arr[2000];
+    int len=0;
+    
+    public:
+    num(){fill_n(arr, 1999, 1000);}
+    
+    void check(num A){
+        for(int i=0; i<2000; i++){
+            if(arr[i]==1000){
+                len=i+1;
+                return;
+            }
+        }
+    }
+    
+    num flip(num A){
+        for(int i=0; i<len; i++) arr[i]=-arr[i];
+        for(int i=len; i<2000; i++) arr[i]=1000;
+        return A;
+    }
+    
+    void stonum(string str);
+    void print();
+    num max(num& A, num& B);
+    num min(num& A, num& B);
+    num add(num A, num B);
+    num sub(num A, num B);
+    num multi(num A, num B);
+};
+
+/*
+input :
+string의 부호를 확인한 다음에
+끝자리부터 arr에 넣는다
+output :
+
+*/
+
+void num::stonum (string str){
+    if(str.front()=='-'){
+        for(int i=0; i<str.length()-1; i++){
+            arr[i]= -(str[str.length()-i]-'0');
+        }
+        len=str.length()-1;
+    }
+    else{
+        for(int i=0; i<str.length()-1; i++){
+            arr[i]=str[str.length()-i]-'0';
+        }
+        len=str.length();
+    }
+}
+
+void num::print(){
+    if(arr[0]<0){
+        cout<<"- ";
+        for(int i=len; i>=0; i--){
+            cout<< -arr[i]<<' ';
+        }
+        cout<<endl;
+    }
+    else{
+        for(int i=len; i>=0; i--) cout<<arr[i]<<' ';
+        cout<<endl;
+    }
+}
+
+num num::max(num& A, num& B){
+    check(A);
+    check(B);
+    if(A.len>B.len) return A;
+    else if(A.len<B.len) return B;
+    else{
+        if(A.arr[A.len-1]>=B.arr[B.len-1]) return A;
+        else return B;
+    }
+}
+
+num num::min(num& A, num& B){
+    if(max(A,B).arr==A.arr) return A;
+    else return B;
+}
+
+num num::add(num A, num B){
+    for(int i=0; i<max(A,B).len; i++){
+        A.arr[i]+=B.arr[i];
+        A.arr[i+1]+=A.arr[i]/10;
+        A.arr[i]/=10;
+    }
+    check(A);
+    return A;
+}
+
+num num::sub(num A, num B){
+    num temp = add(A, flip(B));
+    int ctr=1;
+    while
+}
+
+num num::multi(num A, num B){
+    return A;
+}
+
+int main(){
+    string A, B;
+    cin>>A>>B;
+    
+    num a, b;
+    a.stonum(A);
+    b.stonum(B);
+    a.print();
+    b.print();
+    
+    num plus = a.add(a,b);
+    num minus = a.sub(a,b);
+    num times = a.multi(a,b);
+    
+    plus.print();
+    minus.print();
+    times.print();
+    return 0;
+}
